@@ -37,7 +37,12 @@ public class AvalonController {
                     String latitude = String.valueOf(child.child("Latitude").getValue());
                     String longitude = String.valueOf(child.child("Longitude").getValue());
 
+                    if(firstName.equals("null") || lastName.equals("null") || phone.equals("null") || email.equals("null") || latitude.equals("null") || longitude.equals("null"))
+                        break;
+
                     Refugee ref = new Refugee(firstName, lastName, phone, email, Double.parseDouble(latitude), Double.parseDouble(longitude));
+
+
 
                     refugeeMap.put(firstName+" "+lastName, ref);
                 }
