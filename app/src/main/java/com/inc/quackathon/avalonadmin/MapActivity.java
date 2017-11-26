@@ -94,7 +94,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 avalonController.checkRefugees();
                 imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.refugeeicon);
                 resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 60, 60, false);
-                marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                if(marker.getTag() != null)
+                    marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
             }
         });
     }
