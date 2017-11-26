@@ -33,7 +33,6 @@ public class RefugeeInfo implements GoogleMap.InfoWindowAdapter{
         View myView = context.getLayoutInflater().inflate(R.layout.refugeewindow, null);
 
         TextView fName = (TextView) myView.findViewById(R.id.Firstname);
-        TextView lName = (TextView) myView.findViewById(R.id.lastName);
         TextView phoneT = (TextView) myView.findViewById(R.id.phone);
         TextView emailT = (TextView) myView.findViewById(R.id.email);
         TextView maritalT = (TextView) myView.findViewById(R.id.marital);
@@ -45,7 +44,6 @@ public class RefugeeInfo implements GoogleMap.InfoWindowAdapter{
         if(firstName.equals("Refugee Centre")){
 
             fName.setText(firstName);
-            lName.setText("");
             phoneT.setText("");
             emailT.setText("");
             maritalT.setText("");
@@ -64,8 +62,7 @@ public class RefugeeInfo implements GoogleMap.InfoWindowAdapter{
         String addressName = refInformation[6];
 
 
-        fName.setText(firstName);
-        lName.setText(lastName);
+        fName.setText(firstName + " " + lastName);
         phoneT.setText("Phone Number: " + phone);
         emailT.setText("Email: " + email);
         address.setText(addressName);
