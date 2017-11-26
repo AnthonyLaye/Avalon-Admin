@@ -7,6 +7,8 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by antho on 2017-11-25.
  */
@@ -36,6 +38,7 @@ public class RefugeeInfo implements GoogleMap.InfoWindowAdapter{
         TextView emailT = (TextView) myView.findViewById(R.id.email);
         TextView maritalT = (TextView) myView.findViewById(R.id.marital);
         TextView childrenT = (TextView) myView.findViewById(R.id.children);
+        TextView address = (TextView) myView.findViewById(R.id.address);
 
         String firstName = marker.getTitle();
 
@@ -47,6 +50,7 @@ public class RefugeeInfo implements GoogleMap.InfoWindowAdapter{
             emailT.setText("");
             maritalT.setText("");
             childrenT.setText("");
+            address.setText("");
             return myView;
         }
 
@@ -57,16 +61,16 @@ public class RefugeeInfo implements GoogleMap.InfoWindowAdapter{
         String email = refInformation[3];
         String marital = refInformation[4];
         String children = refInformation[5];
-
+        String addressName = refInformation[6];
 
 
         fName.setText(firstName);
         lName.setText(lastName);
-        phoneT.setText(phone);
-        emailT.setText(email);
-        maritalT.setText(marital);
-        childrenT.setText(children);
-
+        phoneT.setText("Phone Number: " + phone);
+        emailT.setText("Email: " + email);
+        address.setText(addressName);
+        maritalT.setText("Marital Status: " + marital);
+        childrenT.setText(children + " children");
 
         return myView;
 

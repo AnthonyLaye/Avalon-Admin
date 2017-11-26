@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AvalonAdmin</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="refugeecentre">Enter Refugee Center</string>
+    <string name="centrepassword">Enter Center Passcode</string>
     <string name="login"> Login</string>
     <string name="Avalonadmin"> AvalonAdmin</string>
     <string name="google_maps_key"> AIzaSyBMQ08ELMwhUkED2S3_CtEW5NQbg88uTpI </string>
