@@ -40,10 +40,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onLogin(View v){
 
         String centerpass = String.valueOf(centerPasscode.getText());
+        String cent = itemSelected;
 
         if(centerpass.equals("BLOCHACKS2017")) {
 
             Intent map = new Intent(MainActivity.this, MapActivity.class);
+            map.putExtra("Center", cent);
             MainActivity.this.startActivity(map);
         }
         else {

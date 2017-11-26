@@ -69,17 +69,32 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.addMarker(new MarkerOptions().position(italy).title("Refugee Centre").icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)));
         mMap.addMarker(new MarkerOptions().position(asia).title("Refugee Centre").icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mtl));
+        String cent = getIntent().getStringExtra("Center");
 
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            public void onInfoWindowClick(Marker marker) {
+        if(cent.equals("The Refugee Center MTL"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mtl, 14.0f));
 
+        if(cent.equals("United Nations High Commissioner for Refugees - Italy"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(italy, 14.0f));
+
+        if(cent.equals("United Nations High Commissioner for Refugees - Thailand"))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(asia, 14.0f));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
                 avalonController.updateChanged(marker.getTitle());
+                return false;
+            }
+        });
+        mMap.setOnInfoWindowCloseListener(new GoogleMap.OnInfoWindowCloseListener() {
+            @Override
+            public void onInfoWindowClose(Marker marker) {
+
+                avalonController.checkRefugees();
                 imageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.refugeeicon);
                 resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 60, 60, false);
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
-                avalonController.checkRefugees();
-                // Do stuff with the id
             }
         });
     }
