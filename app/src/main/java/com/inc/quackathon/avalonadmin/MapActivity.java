@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +33,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public Bitmap imageBitmap;
     public Bitmap resizedBitmap;
     public ArrayList<Marker> markerList;
+    public SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         avalonController = new AvalonController();
         avalonController.checkRefugees();
         markerList = new ArrayList<>();
+        searchView = (SearchView) findViewById(R.id.searchview);
+        searchView.setQueryHint("Search by Last Name");
     }
 
     @Override
@@ -106,6 +110,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 60, 60, false);
             refugee = mMap.addMarker(new MarkerOptions().position(location).title(ref.firstName).snippet(ref.firstName + "^" + ref.lastName + "^"+ ref.phone + "^"+ ref.email + "^" + ref.marital + "^" + ref.children + "^" + address).icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap)));
         }
+        refugee.setTag(ref.lastName);
         markerList.add(refugee);
 
         RefugeeInfo adapter = new RefugeeInfo(MapActivity.this);
@@ -143,7 +148,52 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 showLocation(refugee);
             }
         }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                searchQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if(newText.equals(""))
+                    showAllMarkers();
+
+                return true;
+            }
+        });
     }
 
+    public void showAllMarkers(){
 
+        if(markerList.size() > 0) {
+
+            for (Marker marker : markerList) {
+
+                marker.setVisible(true);
+            }
+        }
+    }
+
+    public void searchQuery(String query){
+
+        String markerName;
+
+        for(Marker marker: markerList){
+
+            markerName = (String) marker.getTag();
+            assert markerName!= null;
+
+            if(query != null && !(markerName.toLowerCase().equals(query.toLowerCase()))){
+                marker.setVisible(false);
+            }
+            else
+                marker.setVisible(true);
+        }
+
+    }
 }

@@ -70,7 +70,7 @@ public class AvalonController {
 
         DatabaseReference setRef = database.getReference("people");
 
-        setRef.addValueEventListener(new ValueEventListener() {
+        setRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

@@ -11,7 +11,6 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="77dp"
         android:onClick="onLogin"
         android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,8 +19,9 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/passcode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp" />
 
     <Spinner
         android:id="@+id/simpleSpinner"
@@ -54,6 +54,17 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="47dp"
+        android:textColor="@android:color/white"
+        android:text="If you are a refugee center and wish to be featured on the app, please email quackathon34@gmail.com for more information."
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
