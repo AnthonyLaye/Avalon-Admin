@@ -1,13 +1,22 @@
 package com.inc.quackathon.avalonadmin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +26,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -182,6 +196,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 return true;
             }
         });
+
+        checkNotifications();
     }
 
     public void showAllMarkers(){
@@ -211,5 +227,62 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 marker.setVisible(true);
         }
 
+    }
+
+    public void checkNotifications(){
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference setRef = database.getReference("notifications");
+
+        setRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+
+                    DataSnapshot nameR = child.child("name");
+                    DataSnapshot phoneNumberR = child.child("phone");
+                    DataSnapshot messageR = child.child("message");
+
+                    String name = String.valueOf(nameR.getValue());
+                    String phoneNumber = String.valueOf(phoneNumberR.getValue());
+                    String message = String.valueOf(messageR.getValue());
+
+                    sendAlert(name,phoneNumber,message);
+                    child.getRef().removeValue();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void sendAlert(String name, String phone, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Notification From: " + name);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final TextView phoneNumber = new TextView(getApplicationContext());
+        phoneNumber.setText("Phone Number: " + phone);
+        final TextView messageSent = new TextView(getApplicationContext());
+        messageSent.setText(message);
+        phoneNumber.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
+        messageSent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
+        messageSent.setGravity(Gravity.CENTER_HORIZONTAL);
+        phoneNumber.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        layout.addView(phoneNumber);
+        layout.addView(messageSent);
+
+        builder.setView(layout);
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        builder.show();
     }
 }
