@@ -16,8 +16,11 @@ class Refugee {
     public String email;
     public double latitude;
     public double longitude;
+    public String marital;
+    public String children;
+    public String changed;
 
-    public Refugee(String firstName, String lastName, String phone, String email, Double latitude, Double longitude){
+    public Refugee(String firstName, String lastName, String phone, String email, Double latitude, Double longitude, String marital, String children, String changed){
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,5 +28,8 @@ class Refugee {
         this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.marital = marital;
+        this.children = children;
+        this.changed = changed;
     }
 }
