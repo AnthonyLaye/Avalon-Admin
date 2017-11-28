@@ -183,7 +183,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                searchQuery(query);
+                searchRefugee(query);
                 return true;
             }
 
@@ -191,7 +191,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public boolean onQueryTextChange(String newText) {
 
                 if(newText.equals(""))
-                    showAllMarkers();
+                    showMarkers();
 
                 return true;
             }
@@ -200,7 +200,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         checkNotifications();
     }
 
-    public void showAllMarkers(){
+    public void showMarkers(){
 
         if(markerList.size() > 0) {
 
@@ -211,7 +211,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    public void searchQuery(String query){
+    public void searchRefugee(String query){
 
         String markerName;
 
